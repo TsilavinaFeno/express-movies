@@ -7,12 +7,11 @@ app.set('views', './views');
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-    // res.send('Hello <b>world 236</b>');
     res.render('index');
 })
 
 app.get('/movies', (req, res) => {
-    res.send('Bientôt des films ici');
+    res.render('movies');
 })
 
 app.get('/movies/add', (req, res) => {
@@ -21,7 +20,9 @@ app.get('/movies/add', (req, res) => {
 
 app.get('/movies/:id', (req, res) => {
     const id = req.params.id;
-    res.send(`Film numéro ${id}`);
+    // res.send(`Film numéro ${id}`);
+    const title = "Terminator";
+    res.render('movies-details', { moviesId: id, title: title })
 })
 
 app.listen(port, function(){
