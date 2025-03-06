@@ -2,8 +2,13 @@ const express = require('express');
 const app = express();
 const port = 3000
 
+app.use('/static', express.static('public'));
+app.set('views', './views');
+app.set('view engine', 'ejs');
+
 app.get('/', function (req, res) {
-    res.send('Hello <b>world 236</b>');
+    // res.send('Hello <b>world 236</b>');
+    res.render('index');
 })
 
 app.get('/movies', (req, res) => {
