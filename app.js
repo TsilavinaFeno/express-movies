@@ -1,10 +1,13 @@
 const express = require('express');
 const app = express();
 const port = 3000
+const bodyParser = require('body-parser')
 
 app.use('/static', express.static('public'));
 app.set('views', './views');
 app.set('view engine', 'ejs');
+
+let movies
 
 app.get('/', function (req, res) {
     res.render('index');
@@ -12,7 +15,7 @@ app.get('/', function (req, res) {
 
 app.get('/movies', (req, res) => {
     const title = "Listes des films";
-    const movies = [
+    movies = [
         { title: 'Le fabuleux destin d\'Amélie Poulin', year: 2001 },
         { title: 'Buffet froid', year: 1979 },
         { title: 'Le dinner de cons', year: 1998 },
@@ -20,6 +23,19 @@ app.get('/movies', (req, res) => {
     ];
     // res.render('movies');
     res.render('movies', { movies: movies, title: title })
+})
+
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+app.post('/movies', urlencodedParser, (req, res) => {
+    console.log(req.body)
+
+    const newMovie = { title: req.body.movietitle, year: req.body.movieyear }
+    // movies.push(newMovie)
+    movies = [...movies, newMovie]
+    console.log(movies)
+
+    res.sendStatus(201)
 })
 
 app.get('/movies/add', (req, res) => {
