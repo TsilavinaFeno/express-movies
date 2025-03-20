@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <title>Recherche de film</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <%- include('./partials/header') %>
+      <h1>Votre recherche sur <i>THE MOVIE DATABASE</i></h1>
+
+      <div>
+        <form action="/search" method="post">
+            <input type="text" id="search" name="search" placeholder="Titre..." />
+            <button type="submit">Rechercher</button>
+        </form>
+        
+      </div>
+
+      <br />
+
+      <% if (movies && movies.length > 0) { %>
+      <div id="results">
+        <% movies.forEach(movie => { %>
+          <div style="display: flex; margin-bottom: 15px;">
+            <div>
+              <% if (movie.poster_path) { %>
+                <img src="https://image.tmdb.org/t/p/w94_and_h141_bestv2/<%= movie.poster_path %>" 
+                     alt="<%= movie.title %>">
+              <% } else { %>
+                <img src="/static/no-image.jpg" alt="Aucune image disponible">
+              <% } %>
+            </div>
+            <div style="margin-left: 15px;">
+              <strong><%= movie.title %></strong> 
+              (<%= movie.release_date ? movie.release_date.split('-')[0] : 'N/A' %>) <br/>
+              <p><%= movie.overview || "Aucune description disponible." %></p>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+      <% } else { %>
+        <p>Aucun film trouvé.</p>
+      <% } %>
+    </div>
+
+    <%- include('./partials/footer') %>
+  </body>
+</html>
+``

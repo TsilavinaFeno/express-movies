@@ -4,6 +4,7 @@ const port = 3000
 const bodyParser = require('body-parser')
 const multer = require('multer')
 const upload = multer()
+const axios = require('axios')
 
 app.use('/static', express.static('public'));
 app.set('views', './views');
@@ -51,6 +52,33 @@ app.post('/movies', upload.fields([]), (req, res) => {
         console.log(movies)
 
         res.sendStatus(201)
+    }
+})
+
+app.get('/movie-search', (req, res) => {
+    res.render('movie-search')
+})
+
+app.get('/search', (req, res) => {
+    const movies = ""
+    res.render('search', { movies: movies })
+})
+
+app.post('/search', urlencodedParser, async (req, res) => {
+    console.log(req.body);
+
+    const query = req.body.search; // Assuming the frontend sends { query: "movie name" }
+    const apiKey = '3c42ae2c51fa60a4d2d3dce24bc4eb1b';
+    const url = `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=${apiKey}&language=fr-FR`;
+
+    try {
+        const response = await axios.get(url);
+        const movies = response.data.results;
+
+        res.render('search', { movies }); // Passing movies data to the template
+    } catch (error) {
+        console.error('Error fetching data from TMDb:', error);
+        res.status(500).send('Error fetching movie data');
     }
 })
 
