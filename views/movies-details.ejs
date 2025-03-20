@@ -7,10 +7,11 @@
     <title>Movies details</title>
 </head>
 <body>
-    <%- include('./partials/header') %>
-    
-    <h1>Details du film numéro <%= moviesId %></h1>
-    <p>Titre : <%= title %></p>
+    <div class="container">
+        <%- include('./partials/header') %>
+        <h1>Details du film numéro <%= moviesId %></h1>
+        <p>Titre : <%= title %></p>
+    </div>
 
     <%- include('./partials/footer') %>
 </body>

@@ -11,7 +11,15 @@ app.get('/', function (req, res) {
 })
 
 app.get('/movies', (req, res) => {
-    res.render('movies');
+    const title = "Listes des films";
+    const movies = [
+        { title: 'Le fabuleux destin d\'Amélie Poulin', year: 2001 },
+        { title: 'Buffet froid', year: 1979 },
+        { title: 'Le dinner de cons', year: 1998 },
+        { title: 'De rouille et d\'os', year: 2012 },
+    ];
+    // res.render('movies');
+    res.render('movies', { movies: movies, title: title })
 })
 
 app.get('/movies/add', (req, res) => {
@@ -25,6 +33,6 @@ app.get('/movies/:id', (req, res) => {
     res.render('movies-details', { moviesId: id, title: title })
 })
 
-app.listen(port, function(){
+app.listen(port, function () {
     console.log(`listening in port ${port}`);
 })
